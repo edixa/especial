@@ -1,5 +1,5 @@
 import React from 'react';
-import Inicio from './src/navigators/MainStackNavigator';
+import Inicio from './src/screens/Inicio';
 
 
 export default function App() {

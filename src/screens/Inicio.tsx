@@ -1,86 +1,99 @@
-import React from 'react'
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import React, {useState } from "react";
+import {Button, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 
 const Inicio = () => {
-
-    const [PrimerParcial, setPrimerParcial] = useState<number>(0)
-    const [SegundoParcial, setSegundoParcial] = useState<number>(0)
-    const [NotaFinal, setNotaFinal] = useState<number>(0)
-
-    const calCalificaciones= () =>{
-        let calculo= ((PrimerParcial) + (SegundoParcial)/2)
-        setNotaFinal(calculo)
+  const [Estudiante, setEstudiante] = useState<string>("")
+  const [PrimerParcial, setPrimerParcial] = useState("")
+  const [SegundoParcial, setSegundoParcial] = useState("")
+  const [NotaFinal, setNotaFinal] = useState<number>(0)
+  const [CrearLista, setCrearLista] = useState<string[]>([0])
 
 
-    }
+  const agregarEstudiante = () => {
+    const divisor = 2;
+    const NotaFinal = (parseFloat(PrimerParcial) + parseFloat(SegundoParcial)) / divisor;
+    setNotaFinal(NotaFinal);
 
-return (
-    <View style={styles.container}>
-        <View>
-            <Text style={styles.Title}>Calificaciones<Text/>
-            <Text>Nombre del Estudiante<Text/>
+    setCrearLista([...CrearLista,Estudiante]);
+  };
 
-            <TextInput placeholder="IP"></TextInput>
+  return (
+    <View style={styles.containerBase}>
+      <View style={styles.container}>
+        <TextInput
+          placeholder={"Nombre del Estudiante"}
+          onChangeText={setEstudiante}
+        />
+      </View>
+      <View style={styles.title}>
+        <TextInput placeholder={"IP"} onChangeText={setPrimerParcial} />
+      </View>
+      <View style={styles.title}>
+        <TextInput placeholder={"IIP"} onChangeText={setSegundoParcial} />
+      </View>
+      <View style={styles.title}>
+        <Text>{NotaFinal.toString()}</Text>
+      </View>
+      <Button color="#C4C4C4" title="Agregar" onPress={agregarEstudiante} />
 
-            <TextInput placeholder="IP"></TextInput>
-
-            <TextInput>NF</TextInput>
-
-            <TouchableOpacity style={styles.botonAgregar} onPress=('') >
-            <Text style={styles.textbotonAgregar}>Agregar</Text>
-            </TouchableOpacity>
-        </View>
-
+      <ScrollView>
+        {CrearLista.map((lista, index,resultado) => (
+          <View style={styles.container} key={index}>
+            <Text style={styles.text}>{lista}</Text>
+            <Text>Nota Final:{NotaFinal.toString()}</Text>
+          </View>
+        ))}
+      </ScrollView>
     </View>
+  );
+};
 
-    )
-}
-
-export default Inicio
+export default Inicio;
 
 const styles = StyleSheet.create({
-    inputs: {
-        backgroundColor: '#F2F8FB',
-        borderRadius: 8,
-        padding: 10,
-        textAlign: 'right',
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: '#004445'
-
-    },
-    text: {
-
-        fontSize: 34,
-        color: '#034C50',
-
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#dbd5e3',
-        width: '95%',
-        marginLeft: 10
-    },
-    botonAgregar: {
-        backgroundColor: '#754bad',
-        borderRadius: 15,
-        width: '100%',
-        marginHorizontal: 10,
-        marginLeft: 1,
-        marginRight: 1,
-        paddingVertical: 7,
-        marginTop: 1
-    },
-    textbotonAgregar: {
-        color: '#f3f2f5',
-        fontWeight: 'bold',
-        fontSize: 35,
-        textAlign: 'center'
-    },
-    resultText: {
-        fontSize: 20,
-        fontStyle: 'normal',
-        color: '#034C50'
-    }
-})
-
+  container: {
+    width: "95%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#FFFFFF",
+    marginBottom: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    marginLeft: 10,
+    marginTop: "10%",
+    borderWidth: 3,
+    borderColor: "#22B5A3",
+  },
+  text: {
+    fontSize: 24,
+    color: '#8C8A8A'
+  },
+  containerBase: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+  inputs: {
+    backgroundColor: "#F2F8FB",
+    borderRadius: 8,
+    padding: 16,
+    textAlign: "right",
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#004445",
+  },
+  title: {
+    width: 50,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#0cedb9",
+    marginBottom: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    borderRadius: 9,
+    marginLeft: 10,
+    marginTop: 10,
+    borderWidth: 3,
+    borderColor: "#8C8A8A",
+  },
+});
