@@ -3,10 +3,12 @@ import {Button, ScrollView, StyleSheet, Text, TextInput, View} from "react-nativ
 
 const Inicio = () => {
   const [Estudiante, setEstudiante] = useState<string>("")
+  const [Estudiantes, setEstudiantes] = useState<string[]>([])
   const [PrimerParcial, setPrimerParcial] = useState<string>("")
   const [SegundoParcial, setSegundoParcial] = useState<string>("")
   const [NotaFinal, setNotaFinal] = useState<number>(0)
   const [CrearLista, setCrearLista] = useState<string[]>([])
+
 
 
   const agregarEstudiante = () => {
@@ -15,14 +17,15 @@ const Inicio = () => {
     const NotaFinal = (parseFloat(PrimerParcial) + parseFloat(SegundoParcial)) / dividir;
     setNotaFinal(NotaFinal);
 
-    setCrearLista([...CrearLista,Estudiante]);
+    setCrearLista([...CrearLista, NotaFinal.toString()]);
+    setEstudiantes([...Estudiantes, Estudiante])
   };
 
   return (
       
     <View style={styles.containerBase}>
         <View style={styles.inputs}>
-            <Text>Calificaciones</Text>
+            <Text style={styles.containerNew}>CALIFICACIONES</Text>
         </View>
       <View style={styles.container}>
         <TextInput
@@ -48,10 +51,10 @@ const Inicio = () => {
       </View>
       <ScrollView>
         {
-        CrearLista.map((lista, index) => (
+        Estudiantes.map((lista, index) => (
           <View style={styles.container} key={index}>
             <Text style={styles.text}>{lista}</Text>
-            <Text style={styles.text}>Nota Final: {NotaFinal}</Text>
+            <Text style={styles.text}>Nota Final: {CrearLista[index]}</Text>
           </View>
           
         ))}
@@ -118,7 +121,9 @@ const styles = StyleSheet.create({
       marginTop:20,
 
   },
-  container2:{
-    fontSize: 10
+  containerNew:{
+    fontSize: 25,
+    fontWeight: "bold",
+
   }
 });
