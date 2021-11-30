@@ -3,28 +3,36 @@ import {Button, ScrollView, StyleSheet, Text, TextInput, View} from "react-nativ
 
 const Inicio = () => {
   const [Estudiante, setEstudiante] = useState<string>("")
-  const [PrimerParcial, setPrimerParcial] = useState("")
-  const [SegundoParcial, setSegundoParcial] = useState("")
+  const [PrimerParcial, setPrimerParcial] = useState<string>("")
+  const [SegundoParcial, setSegundoParcial] = useState<string>("")
   const [NotaFinal, setNotaFinal] = useState<number>(0)
-  const [CrearLista, setCrearLista] = useState<string[]>([0])
+  const [CrearLista, setCrearLista] = useState<string[]>([])
 
 
   const agregarEstudiante = () => {
-    const divisor = 2;
-    const NotaFinal = (parseFloat(PrimerParcial) + parseFloat(SegundoParcial)) / divisor;
+
+    const dividir = 2;
+    const NotaFinal = (parseFloat(PrimerParcial) + parseFloat(SegundoParcial)) / dividir;
     setNotaFinal(NotaFinal);
 
     setCrearLista([...CrearLista,Estudiante]);
   };
 
   return (
+      
     <View style={styles.containerBase}>
+        <View style={styles.inputs}>
+            <Text>Calificaciones</Text>
+        </View>
       <View style={styles.container}>
         <TextInput
+          style={styles.text}
           placeholder={"Nombre del Estudiante"}
           onChangeText={setEstudiante}
         />
+
       </View>
+      <View style={styles.diseñobor}>
       <View style={styles.title}>
         <TextInput placeholder={"IP"} onChangeText={setPrimerParcial} />
       </View>
@@ -32,19 +40,24 @@ const Inicio = () => {
         <TextInput placeholder={"IIP"} onChangeText={setSegundoParcial} />
       </View>
       <View style={styles.title}>
-        <Text>{NotaFinal.toString()}</Text>
+        <Text>{NotaFinal}</Text>
       </View>
+      <View style={{ marginHorizontal: '30%' }}>
       <Button color="#C4C4C4" title="Agregar" onPress={agregarEstudiante} />
-
+      </View>
+      </View>
       <ScrollView>
-        {CrearLista.map((lista, index,resultado) => (
+        {
+        CrearLista.map((lista, index) => (
           <View style={styles.container} key={index}>
             <Text style={styles.text}>{lista}</Text>
-            <Text>Nota Final:{NotaFinal.toString()}</Text>
+            <Text style={styles.text}>Nota Final: {NotaFinal}</Text>
           </View>
+          
         ))}
       </ScrollView>
     </View>
+
   );
 };
 
@@ -61,39 +74,51 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     marginLeft: 10,
-    marginTop: "10%",
+    marginTop: "2%",
     borderWidth: 3,
     borderColor: "#22B5A3",
   },
   text: {
-    fontSize: 24,
-    color: '#8C8A8A'
+    fontSize: 15,
+    color: '#8C8A8A',
+    width: '70%'
   },
   containerBase: {
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
   inputs: {
-    backgroundColor: "#F2F8FB",
-    borderRadius: 8,
-    padding: 16,
+    backgroundColor: "#8C8A8A",
+    borderRadius: 2,
+    padding: 20,
     textAlign: "right",
     fontSize: 22,
     fontWeight: "bold",
-    color: "#004445",
+    color: "black",
+    marginTop: '10%',
+    marginHorizontal: 10
   },
   title: {
     width: 50,
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#0cedb9",
-    marginBottom: 15,
+    backgroundColor: "#FFFFFF",
+    marginBottom: 10,
     paddingVertical: 10,
     paddingHorizontal: 8,
-    borderRadius: 9,
+    borderRadius: 8,
     marginLeft: 10,
-    marginTop: 10,
-    borderWidth: 3,
+    marginTop: 3,
+    borderWidth: 2,
     borderColor: "#8C8A8A",
   },
+  diseñobor:{
+      flexDirection:'row',
+      width: '50%',
+      marginTop:20,
+
+  },
+  container2:{
+    fontSize: 10
+  }
 });
